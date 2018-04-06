@@ -23,7 +23,7 @@ class SearchBooks extends React.Component {
 			};
 		});
 	};
-	
+
 	updateResults = (books) => {
 		this.setState({
 			results: books
@@ -35,6 +35,7 @@ class SearchBooks extends React.Component {
 	shelfChange = (id, shelf) => {
 		let books = this.state.results;
 		const book = books.filter(b => b.id === id)[0];
+		book.shelf = shelf;
 		this.props.onShelfChange(book, shelf);
 	};
 
@@ -57,15 +58,18 @@ class SearchBooks extends React.Component {
 						{this.state.results.map(book =>
 							<li key={book.id} className="book">
 								<div className="book-top">
-									<div className="book-cover" style={{width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})`}} />
+									<div className="book-cover" style={{
+										width: 128,
+										height: 193,
+										backgroundImage: book.imageLinks ? (
+											`url(${book.imageLinks.thumbnail})`
+										) : (null)}} />
 									<div className="book-shelf-changer">
 											<select
 												value={book.shelf}
 												onChange={(event) => this.shelfChange(book.id, event.target.value)}
 											>
-												<option value="none" disabled>
-													Move to...
-												</option>
+												<option value="none" disabled>Move to...</option>
 												<option value="currentlyReading">Currently Reading</option>
 												<option value="wantToRead">Want to Read</option>
 												<option value="read">Read</option>
