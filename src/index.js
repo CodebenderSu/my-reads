@@ -5,6 +5,8 @@ import BooksApp from './components/App.js';
 import './styles/index.css';
 
 ReactDOM.render(
-  <BrowserRouter><BooksApp /></BrowserRouter>,
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BooksApp />
+  </BrowserRouter>,
   document.getElementById('root')
 );
